@@ -1,12 +1,10 @@
 """
 monte_carlo.py
 Experiments with forward modeling (despite the name!)
-Ryan Bakko & Trey Wenger - August 2024
+Ryan Bakko & Trey Wenger - August, September 2024
 
-Sep 9: TODO: Update code, comment and update pull request
+Sep 9: TODO: Update code, comment and update pull request. Plot over one another to derive uncertainties
 
-Worked on calculating uncertainties in parameters and drawing the uncertainty interval on my plot
-TODO: Debug and check if I'm on the right track
 """
 
 import numpy as np
@@ -26,7 +24,7 @@ def simulate_observation(freqs, true_physical_params, nu_0, noise):
     return observed_spectrum
 
 
-# Step 2: Monte Carlo Least Squares Fitting
+# Monte Carlo Least Squares Fitting
 def monte_carlo_least_squares(
     freqs, true_physical_params, nu_0, noise, num_iterations=1000
 ):
@@ -46,7 +44,7 @@ def monte_carlo_least_squares(
     for i in range(num_iterations):
         print(i, end="\r")
 
-        # Shuffle the data (here I shuffle the y-data, but it could be x-data as well)
+        # Shuffle the data
         observed_spectrum = simulate_observation(
             freqs, true_physical_params, nu_0, noise
         )
@@ -77,7 +75,7 @@ def monte_carlo_least_squares(
     return np.array(fitted_params)
 
 
-# Step 3: Plotting the results
+# Plotting the results
 def plot_monte_carlo_results(fitted_params, param_names):
     """
     Plots the Monte Carlo results, including posterior distributions and uncertainty intervals.
@@ -107,9 +105,6 @@ def plot_monte_carlo_results(fitted_params, param_names):
 
     plt.tight_layout()
     plt.show()
-
-
-# End of New Monte Carlo additions
 
 
 def forward_model(freqs, physical_params, nu_0):
@@ -278,3 +273,49 @@ if __name__ == "__main__":
 
     # Plot the results with uncertainties
     plot_fit_with_uncertainty(freqs, data, nu_0, fitted_params, uncertainties)
+
+
+# New as of 9/14/2024:
+def plot_monte_carlo_results(fitted_params, param_names):
+    """
+    Plots the Monte Carlo results, including posterior distributions and uncertainty intervals.
+
+    Parameters:
+    fitted_params: np.array
+        Array of fitted parameters from Monte Carlo simulation.
+    param_names: list
+        List of parameter names corresponding to the columns in fitted_params.
+    """
+    num_params = fitted_params.shape[1]
+
+    fig, ax = plt.subplots(num_params, 1, figsize=(10, 5 * num_params))
+
+    for i in range(num_params):
+        param_vals = fitted_params[:, i]
+
+        # Calculate mean and standard deviation for the uncertainty margins
+        mean = np.mean(param_vals)
+        std_dev = np.std(param_vals)
+
+        # Plot the histogram for posterior distribution
+        ax[i].hist(
+            param_vals,
+            bins=30,
+            density=True,
+            alpha=0.75,
+            label="Posterior Distribution",
+        )
+
+        # Overlay uncertainty margin lines
+        ax[i].axvline(mean, color="r", linestyle="-", label="Mean")
+        ax[i].axvline(mean - std_dev, color="g", linestyle="--", label="-1σ")
+        ax[i].axvline(mean + std_dev, color="g", linestyle="--", label="+1σ")
+
+        # Adding titles and labels
+        ax[i].set_title(f"Monte Carlo Simulation for {param_names[i]}")
+        ax[i].set_xlabel(f"{param_names[i]}")
+        ax[i].set_ylabel("Density")
+        ax[i].legend()
+
+    plt.tight_layout()
+    plt.show()
