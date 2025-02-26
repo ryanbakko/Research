@@ -69,7 +69,7 @@
 
 ### 5. Model Fitting
 
-   **Status: Complete**
+   **Status: COMPLETE**
 
    *Learning objective*: Develop an understanding of how models are fit to data
 
@@ -89,7 +89,7 @@
 
 ### 6. Monte Carlo Uncertainty Analysis
 
-   **Status: Ongoing**
+   **Status: COMPLETE**
 
    *Learning objective*: Introduce yourself to Monte Carlo methods
 
@@ -103,9 +103,9 @@
    4. Visualization: plot the posterior distributions, and plot the range of allowed models on the data
    </details>
 
-### 7. Monte Carlo Markov Chain Anysis
+### 7. Monte Carlo Markov Chain Analysis
 
-   **Status: New**
+   **Status: COMPLETE**
 
    *Learning objective*: Introduce yourself to Monte Carlo Markov Chain analyses
 
@@ -121,7 +121,7 @@
 
 ### 8. Working with Real Data
 
-   **Status: New**
+   **Status: CANCEL**
 
    *Learning objective*: Understand the data we'll be working with
 
@@ -136,7 +136,7 @@
 
 ### 9. Testing `physiokinematic`
 
-    **Status: New**
+    **Status: COMPLETE**
 
     *Learning objective*: Understand the `physiokinematic` forward model
 
@@ -151,4 +151,42 @@
     3. Specifically, try to run the "test.ipynb" notebook and understand what it is doing
     
     As you work through these steps, note any questions or possible issues that you notice or encounter.
+    </details>
+
+### 10. Running `physiokinematic on real data
+
+    **Status: New**
+
+    *Learning objective*: Learn how to process big data sets
+
+    *Criteria for success*: Run the model on all of the data!
+
+    <details>
+    Now that we have a working model, it's time to run it on some data!
+    Following the process in the "real data" notebook, try fitting the
+    model to all of the real HII region data on scylla!
+
+    Take it one step at a time:
+    1. Run the model on a single HII region
+    2. Save the output (i.e. posterior samples, the "trace") from the model
+    3. Create a python script that does (1) and (2)
+    4. Update the python script to loop over all HII regions
+    5. Compile the data and present the results
+    </details>
+
+### 11. Outline Paper
+
+    **Status: New**
+
+    *Learning objective*: Practice writing a scientific manuscript
+
+    *Criteria for success*: Generate a draft outline for the paper
+
+    <details>
+    I have shared with you the paper on Overleaf! Currently it
+    is filled with a template and demonstration of my writing
+    style. Edit this manuscript and create a draft outline for
+    our paper! Feel free to follow the template as closely or
+    loosely as you like. Also feel free to suggest some catchy
+    titles!
     </details>
